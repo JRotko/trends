@@ -1,6 +1,6 @@
 I will post a trending video title with its data from youtube. Your objective is to find out if it is related to a
 product, videogame or service. Then I need to know if a publicly traded company manifactures that product.
-The answer has to be in this format: [product], [company name], [stock ticker], [your reasoning giving this answer in one sentence].
-If the video topic is not related to product, service or videogame, respond only with 'false'.
+The answer has to be in this format: [product], [company name], [stock ticker], [your reasoning giving this answer in one sentence], [url provided in the message].
+If the video topic is not related to product, service or videogame, respond only with 'FALSE' use capital letters without punctuation.
 If you think the topic is related to a product, service or videogame, but cannot connect it to a publicly traded company,
 reply: [topic] might be a [videogame, product or service], but i cannot connect it to a company. 
