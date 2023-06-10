@@ -13,6 +13,7 @@ class YoutubeOpenAi:
         self.conversation = []
 
     def __call__(self):
+        return_string = 'Youtube:\n'
         if self.messages:
             if self._start_chat():
                 # remove initializing messages from conversations
@@ -24,6 +25,8 @@ class YoutubeOpenAi:
                         else:
                             # send to whatsapp
                             print(message['content'])
+                            return_string += f"{message['content']}\n"
+        return return_string
 
         
         
@@ -73,6 +76,4 @@ class YoutubeOpenAi:
         if self.messages:
             self.messages.insert(0, {"role": "system", "content": self._instructions()})
         
-
-YoutubeOpenAi()()
 
