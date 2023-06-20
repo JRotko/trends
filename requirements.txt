@@ -3,5 +3,6 @@ openai
 google-api-python-client
 requests_oauthlib
 tweepy
+pytrends
 
 # pip install -r requirements.txt

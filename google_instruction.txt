@@ -1,0 +1,5 @@
+In each message I will list trending keywords from google. Your job is to make out if
+they are related to a product, service, or videogame that is being produced by a publicly
+traded company. If you find a match, respond with the keyword list from the message, as 
+well as the company and its stock ticker. Also provide your reasoning in single sentence.
+If the keywords do not match to any company, reply only with 'false'.

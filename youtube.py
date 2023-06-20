@@ -22,7 +22,9 @@ class Youtube:
             messages.append({"role": "user", "content": prompt})
         # set instructions in front of the list and return it
         if messages:
-            messages.insert(0, {"role": "system", "content": open('youtube_instruction.txt', 'r').read()})
+            with open('youtube_instruction.txt', 'r') as file:
+                instructions = file.read().replace('\n', ' ')
+            messages.insert(0, {"role": "system", "content": instructions})
             print(messages)
             return messages
         # return false if nothing found
