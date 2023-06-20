@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 load_dotenv()
 
-class YoutubePopularFinder:
+class Youtube:
     # Initialize the request
     def __init__(self):
         self.youtube = build('youtube', 'v3', developerKey=os.getenv('YOUTUBE_API_KEY'))
@@ -14,7 +14,20 @@ class YoutubePopularFinder:
     # execute the request and return the results
     def __call__(self):
         videos = self._get_videos(self.youtube)
-        return self._find_recent_videos(videos)
+        videos = self._find_recent_videos(videos)
+        messages = []
+        for video in videos:
+            # here we can later analyze the whole video and thumbnail
+            prompt = f'Title: {video["snippet"]["title"]}, URL: youtube.com/watch?v={video["id"]}'
+            messages.append({"role": "user", "content": prompt})
+        # set instructions in front of the list and return it
+        if messages:
+            messages.insert(0, {"role": "system", "content": open('youtube_instruction.txt', 'r').read()})
+            print(messages)
+            return messages
+        # return false if nothing found
+        return False
+        
 
     def _find_recent_videos(self, videos, hours=24):
         recent=[]
@@ -56,5 +69,3 @@ class YoutubePopularFinder:
         return videos
 
 
-
-YoutubePopularFinder()()

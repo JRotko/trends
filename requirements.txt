@@ -1,5 +1,7 @@
 sendgrid
 openai
 google-api-python-client
+requests_oauthlib
+tweepy
 
 # pip install -r requirements.txt
