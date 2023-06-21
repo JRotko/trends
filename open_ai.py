@@ -13,20 +13,18 @@ class OpenAi:
         self.ai_model = 'gpt-3.5-turbo'
         self.conversation = []
         self.max_retries = 5
+        self.responses=[]
 
     def __call__(self):
         return_string = ''
         if self.messages:
             if self._start_chat():
-                # remove initializing messages from conversations
-                del self.conversation[:2]
-                for message in self.conversation:
-                    if message['role'] == 'assistant':
-                        if 'FALSE' in message['content'].upper().strip().rstrip('.'):
-                            continue
-                        else:
-                            print(message['content'])
-                            return_string += f"{message['content']}\n"
+                for response in self.responses:
+                    if 'FALSE' in response.upper():
+                        continue
+                    else:
+                        return_string += response
+
         return return_string
 
         
@@ -36,7 +34,7 @@ class OpenAi:
         response = openai.ChatCompletion.create(
             model=self.ai_model,
             messages=[self.messages[0]],
-            max_tokens=500,
+            max_tokens=600,
             temperature=0.2
         )
         # remove the initializing message from the list
@@ -44,28 +42,30 @@ class OpenAi:
         if response and 'choices' in response:
             self.conversation.append(response.choices[0]['message'])
             for message in self.messages:
-                self.conversation.append(message)
                 delay = 1
                 while True:
-                    retries=0
+                    service_retries=0
+                    rate_retries=0
                     try:
                         response = openai.ChatCompletion.create(
                             model=self.ai_model,
-                            messages=self.conversation,
-                            max_tokens=500,
+                            messages=self.conversation + [message],
+                            max_tokens=600,
                             temperature=0.2
                         )
-                        self.conversation.append(response.choices[0]['message'])
+                        # add the prompt from previous message to add clarity in the response
+                        # gpt3.5 was too stupid to reliably provide the youtube link/google keywords
+                        self.responses.append(f"Prompt: {message['content'][:100]}\nResponse: {response.choices[0]['message']['content']}\n\n")
                         print(response['usage'])
                         break
                     # Sometimes the api just rejects new messages. Just have a small delay and try again
                     except openai.error.ServiceUnavailableError as e:
-                        print(f"RETRIES: {retries}")
-                        retries+=1
+                        print(f"RETRIES: {service_retries}")
+                        service_retries+=1
                         # Check if max retries has been reached
-                        if retries > self.max_retries:
+                        if service_retries > self.max_retries:
                             raise Exception(
-                                f"Maximum number of retries ({max_retries}) exceeded."
+                                f"Maximum number of service retries ({max_retries}) exceeded."
                             )
         
                         # Increment the delay. Randomness is suggested in documentation
@@ -73,12 +73,18 @@ class OpenAi:
         
                         # Sleep for the delay
                         time.sleep(delay)
+
+                    except openai.error.RateLimitError as e:
+                        sleep(60)
+                        rate_retries+=1
+                        # Check if max retries has been reached
+                        if rate_retries > self.max_retries:
+                            raise Exception(
+                                f"Maximum number of rate retries ({max_retries}) exceeded."
+                            )
                     except Exception as e:
                         print(e)
-        else:
-            # maybe send error to whatsapp from here
-            print(f"Openai error in youtube, failed to start conversation: {response['error']['message']}")
- 
+
         return True
 
 

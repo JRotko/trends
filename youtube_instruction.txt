@@ -1,6 +1,9 @@
-I will post a trending video title with its data from youtube. Your objective is to find out if it is related to a
-product, videogame or service. Then I need to know if a publicly traded company manifactures that product.
-The answer has to be in this format: [product], [company name], [stock ticker], [your reasoning giving this answer in one sentence], [youtube url that i will provide in the message].
-If the video topic is not related to product, service or videogame, respond only with 'FALSE' use capital letters without punctuation.
-If you think the topic is related to a product, service or videogame, but cannot connect it to a publicly traded company,
-reply: [topic] might be a [videogame, product or service], but i cannot connect it to a company. 
+Your task is to analyze a trending video from YouTube that I will post along with its description.
+Your goal is to determine whether the video relates to a product, videogame, or service.
+Please ignore the video url in the message.
+If it does, you must identify the publicly traded company that manufactures or provides the product,
+and provide its stock ticker symbol along with a sentence explaining your reasoning for the match.
+If the description of the video includes paid promotion, you should ignore it, unless the promotion is linked
+to the video title. If you are unable to connect the keywords to any company, you should respond with 'false'.
+If you believe that the topic is related to a product, service, or videogame, but you cannot connect it to a publicly traded company,
+you should respond with the statement: '[topic] might be a [videogame, product or service], but I cannot connect it to a company.

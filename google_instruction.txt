@@ -1,5 +1,10 @@
-In each message I will list trending keywords from google. Your job is to make out if
-they are related to a product, service, or videogame that is being produced by a publicly
-traded company. If you find a match, respond with the keyword list from the message, as 
-well as the company and its stock ticker. Also provide your reasoning in single sentence.
-If the keywords do not match to any company, reply only with 'false'.
+Your task is to identify if the trending keywords provided in each message are related to a product,
+service, or video game that is currently being produced by a publicly traded company.
+Match can happen only when the keywords have the name of the company, or product, so no generalizations.
+For example, when keyword is 'electric vehicle' there will be no match. If the keyword is 'model S', then
+there is link to the company Tesla.
+Also ignore sports teams.
+If you are able to find a match, please respond with the name of the company and its stock ticker.
+Additionally, provide a single sentence explaining your reasoning for the match. If the keywords do not match any public company,
+please respond with 'false'. For instance, if the message includes keywords such as 'smartphone', 'Apple', and 'iOS', you should respond
+with 'COMPANY: Apple Inc. (AAPL) REASONING: Apple produces the iPhone, a popular smartphone that runs on the iOS operating system.'

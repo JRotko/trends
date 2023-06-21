@@ -17,8 +17,9 @@ class Youtube:
         videos = self._find_recent_videos(videos)
         messages = []
         for video in videos:
-            # here we can later analyze the whole video and thumbnail
-            prompt = f'Title: {video["snippet"]["title"]}, URL: youtube.com/watch?v={video["id"]}'
+            # URL: youtube.com/watch?v={video["id"]}  to add url
+            # here we can later analyze the whole video and thumbnail trim down to 200 characters to save tokens
+            prompt = f'URL: youtube.com/watch?v={video["id"]} Title: {video["snippet"]["title"]}, Description: {video["snippet"]["description"][:200]}'
             messages.append({"role": "user", "content": prompt})
         # set instructions in front of the list and return it
         if messages:
